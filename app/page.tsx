@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { ImportModal } from "@/components/import-modal";
 import { AddLogModal } from "@/components/add-log-modal";
+import { LoginScreen } from "@/components/login-screen";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -85,6 +86,7 @@ function generateInternalCarNumber(records: CorrectiveActionRecord[]): string {
 }
 
 export default function Home() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [records, setRecords] = useState<CorrectiveActionRecord[]>([]);
   const [dirtyState, setDirtyState] = useState<DirtyState>(new Map());
   const [loading, setLoading] = useState(true);
@@ -149,17 +151,25 @@ export default function Home() {
     followUpComments: "Comments",
   };
 
+  // Check authentication on mount
+  useEffect(() => {
+    const authenticated = sessionStorage.getItem("authenticated") === "true";
+    setIsAuthenticated(authenticated);
+  }, []);
+
   // Load records from localStorage
   useEffect(() => {
-    const loaded = loadRecords();
-    setRecords(loaded.sort((a, b) => {
-      if (a.internalCarNumber && b.internalCarNumber) {
-        return a.internalCarNumber.localeCompare(b.internalCarNumber);
-      }
-      return 0;
-    }));
-    setLoading(false);
-  }, []);
+    if (isAuthenticated) {
+      const loaded = loadRecords();
+      setRecords(loaded.sort((a, b) => {
+        if (a.internalCarNumber && b.internalCarNumber) {
+          return a.internalCarNumber.localeCompare(b.internalCarNumber);
+        }
+        return 0;
+      }));
+      setLoading(false);
+    }
+  }, [isAuthenticated]);
 
   // Track dirty state
   const markDirty = useCallback(
@@ -746,6 +756,11 @@ export default function Home() {
       </td>
     );
   };
+
+  // Show login screen if not authenticated
+  if (!isAuthenticated) {
+    return <LoginScreen onLogin={() => setIsAuthenticated(true)} />;
+  }
 
   if (loading) {
     return (
