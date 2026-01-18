@@ -382,7 +382,7 @@ export default function Home() {
           record.komatsuTracking || "",
           record.workOrderNumber || "",
           formatDateForExport(record.manufactureDate),
-          record.quantity || "",
+          record.quantity !== undefined ? String(record.quantity) : "",
           record.problemDescription || "",
           record.departmentResponsible || "",
           record.defectCategory || "",
@@ -394,7 +394,7 @@ export default function Home() {
             : "N",
           record.correctiveActionPrevention || "",
           record.correctiveActionDetection || "",
-          record.proposedCost || "",
+          record.proposedCost !== undefined ? String(record.proposedCost) : "",
           record.costApproved === true ||
           record.costApproved === "Y" ||
           record.costApproved === "Yes"
@@ -403,12 +403,12 @@ export default function Home() {
           record.initialResp || "",
           formatDateForExport(record.finalRespDueDate),
           formatDateForExport(record.completedRespActual),
-          record.daysToClose || "",
+          record.daysToClose !== undefined ? String(record.daysToClose) : "",
           formatDateForExport(record.closedDate),
           record.employeeId || "",
           record.rmaNumber || "",
           record.followUpContact || "",
-          record.followUpDebitCost || "",
+          record.followUpDebitCost !== undefined ? String(record.followUpDebitCost) : "",
           record.followUpComments || "",
         ]);
       });
