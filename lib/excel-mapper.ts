@@ -115,7 +115,7 @@ export function mapExcelRowToNormalized(
         normalized[typedFieldName] = numValue as any;
       }
     } else {
-      normalized[typedFieldName] = stringValue;
+      (normalized as any)[typedFieldName] = stringValue;
     }
   }
 
