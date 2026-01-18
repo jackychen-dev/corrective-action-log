@@ -60,8 +60,12 @@ export async function GET() {
       if (a.internalCarNumber) return -1;
       if (b.internalCarNumber) return 1;
       
-      const aDate = a.receivedDate ? (a.receivedDate.toDate?.() || new Date(a.receivedDate)) : new Date(0);
-      const bDate = b.receivedDate ? (b.receivedDate.toDate?.() || new Date(b.receivedDate)) : new Date(0);
+      const aDate = a.receivedDate 
+        ? (typeof a.receivedDate === 'string' ? new Date(a.receivedDate) : a.receivedDate.toDate())
+        : new Date(0);
+      const bDate = b.receivedDate 
+        ? (typeof b.receivedDate === 'string' ? new Date(b.receivedDate) : b.receivedDate.toDate())
+        : new Date(0);
       return aDate.getTime() - bDate.getTime();
     });
     
