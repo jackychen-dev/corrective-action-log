@@ -75,7 +75,7 @@ export function parseExcelFile(file: File): Promise<ParseResult> {
             
             if (hasValidHeaders || tryRow === 3) {
               // Found valid data or reached last attempt
-              jsonData = tempData;
+              jsonData = tempData as ExcelRow[];
               startRow = tryRow;
               console.log(`Using data starting from row ${tryRow + 1} (Excel row ${tryRow + 1})`);
               break;
