@@ -62,10 +62,10 @@ export function parseExcelFile(file: File): Promise<ParseResult> {
           
           if (tempData.length > 0) {
             console.log(`Found ${tempData.length} rows starting from row ${tryRow + 1}`);
-            console.log('First row headers:', Object.keys(tempData[0]).slice(0, 10));
-            
+            console.log('First row headers:', Object.keys(tempData[0] as any).slice(0, 10));
+
             // Check if this looks like valid data (has recognizable headers)
-            const headers = Object.keys(tempData[0]);
+            const headers = Object.keys(tempData[0] as any);
             const hasValidHeaders = headers.some(h => 
               h.toLowerCase().includes('car') || 
               h.toLowerCase().includes('status') ||
