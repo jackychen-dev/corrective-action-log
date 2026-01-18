@@ -39,8 +39,8 @@ export interface CorrectiveActionRecord {
   followUpContact?: string;
   followUpDebitCost?: number;
   followUpComments?: string;
-  updatedAt?: Timestamp;
-  createdAt?: Timestamp;
+  updatedAt?: Timestamp | string;
+  createdAt?: Timestamp | string;
   emailSent?: boolean;
 }
 
